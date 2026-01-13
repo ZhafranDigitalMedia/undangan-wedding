@@ -1,0 +1,166 @@
+.overlay {
+    background: rgba(0, 0, 0, 0.55);
+    height: 100vh;
+    color: white;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.title {
+    font-family: 'Playfair Display', serif;
+    letter-spacing: 3px;
+    font-size: 18px;
+}
+
+.names {
+    font-family: 'Great Vibes', cursive;
+    font-size: 58px;
+    line-height: 1.2;
+    margin: 20px 0;
+}
+
+.and {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+}
+
+.date {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+}
+
+.btn-gold {
+    background-color: #d4af37;
+    color: white;
+    padding: 12px 32px;
+    border-radius: 30px;
+    border: none;
+    margin-top: 20px;
+}
+
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 2s ease forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+.slide-up {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: slideUp 1.5s ease forwards;
+}
+
+@keyframes slideUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.open-btn {
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.08);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.zoom-out {
+    animation: zoomOut 0.8s ease forwards;
+}
+
+@keyframes zoomOut {
+    to {
+        opacity: 0;
+        transform: scale(1.2);
+    }
+}
+
+/* BACKGROUND */
+.rsvp-bg {
+    min-height: 100vh;
+    background-size: cover;
+    background-position: center;
+}
+
+/* OVERLAY */
+.rsvp-overlay {
+    min-height: 100vh;
+    background: rgba(0, 0, 0, 0.55);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* CARD */
+.rsvp-card {
+    backdrop-filter: blur(6px);
+    padding: 35px;
+    border-radius: 18px;
+    width: 100%;
+    size: 40px;
+    max-width: 400px;
+    color: white;
+    text-align: center;
+}
+
+/* FORM */
+/* INPUT & SELECT DENGAN GARIS */
+.rsvp-card input,
+.rsvp-card select {
+    width: 100%;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+    border-radius: 8px;
+
+    background: white;
+    border: 2px solid #e0e0e0;
+    /* ← GARIS */
+
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+/* EFEK FOCUS (SAAT DIKLIK) */
+.rsvp-card input:focus,
+.rsvp-card select:focus {
+    border-color: #d4b03f;
+    /* emas */
+}
+.btn-gold {
+    background: #d4af37;
+    color: white;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    border-radius: 30px;
+}
+
+.btn-light {
+    display: block;
+    margin-top: 10px;
+    background: white;
+    color: black;
+    padding: 12px;
+    border-radius: 30px;
+    text-decoration: none;
+}
