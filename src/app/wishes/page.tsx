@@ -27,7 +27,7 @@ export default function WishesPage() {
     const [pesan, setPesan] = useState("");
     const [wishes, setWishes] = useState<Wish[]>([]);
 
-    // ▶️ Play music setelah klik pertama
+    // ▶️ Play music
     useEffect(() => {
         const playMusic = () => {
             audioRef.current?.play().catch(() => { });
@@ -57,16 +57,24 @@ export default function WishesPage() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        await addDoc(collection(db, "wishes"), {
-            nama: nama.trim(),
-            hubungan: hubungan.trim(),
-            pesan: pesan.trim(),
-            createdAt: serverTimestamp(),
-        });
+        try {
+            await addDoc(collection(db, "wishes"), {
+                nama: nama.trim(),
+                hubungan: hubungan.trim(),
+                pesan: pesan.trim(),
+                createdAt: serverTimestamp(),
+            });
 
-        setNama("");
-        setHubungan("");
-        setPesan("");
+            // Reset form
+            setNama("");
+            setHubungan("");
+            setPesan("");
+
+            // ❌ Tidak redirect, biar list tetap muncul
+        } catch (error) {
+            console.error(error);
+            alert("Gagal mengirim ucapan");
+        }
     };
 
     return (
@@ -79,7 +87,7 @@ export default function WishesPage() {
                 position: "relative",
             }}
         >
-            {/* OVERLAY */}
+            {/* Overlay */}
             <div
                 style={{
                     position: "absolute",
@@ -88,7 +96,7 @@ export default function WishesPage() {
                 }}
             />
 
-            {/* AUDIO */}
+            {/* Audio */}
             <audio ref={audioRef} loop preload="auto">
                 <source src="/music/until-i-found-you.mp3" type="audio/mpeg" />
             </audio>
@@ -101,6 +109,9 @@ export default function WishesPage() {
                     maxWidth: "420px",
                     margin: "0 auto",
                     padding: "24px 16px",
+                    display: "flex",
+                    flexDirection: "column",
+                    minHeight: "100vh",
                 }}
             >
                 <h2
@@ -122,6 +133,9 @@ export default function WishesPage() {
                         padding: "20px",
                         borderRadius: "14px",
                         marginBottom: "24px",
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "10px",
                     }}
                 >
                     <input
@@ -131,7 +145,6 @@ export default function WishesPage() {
                         required
                         style={inputStyle}
                     />
-
                     <input
                         placeholder="Teman / Keluarga"
                         value={hubungan}
@@ -139,7 +152,6 @@ export default function WishesPage() {
                         required
                         style={inputStyle}
                     />
-
                     <textarea
                         placeholder="Ucapan"
                         value={pesan}
@@ -148,7 +160,6 @@ export default function WishesPage() {
                         rows={3}
                         style={{ ...inputStyle, resize: "none" }}
                     />
-
                     <button type="submit" style={buttonStyle}>
                         Kirim Ucapan
                     </button>
@@ -183,7 +194,7 @@ const inputStyle: React.CSSProperties = {
     borderRadius: "8px",
     border: "2px solid #e0e0e0",
     fontSize: "14px",
-    marginBottom: "10px",
+    outline: "none",
 };
 
 const buttonStyle: React.CSSProperties = {

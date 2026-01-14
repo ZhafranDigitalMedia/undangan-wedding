@@ -41,6 +41,7 @@ export default function RSVPPage() {
             setNama("");
             setJumlah(null);
             setStatus("Hadir");
+            window.location.href = "/wishes";
         } catch {
             alert("Gagal mengirim RSVP");
         }

@@ -30,9 +30,10 @@ export default function Index() {
                 inset: 0,
                 overflow: "hidden",
                 color: "white",
+                fontFamily: "var(--font-playfair)",
             }}
         >
-            {/* BACKGROUND (ZOOM DI SINI, BUKAN DI PAGE) */}
+            {/* BACKGROUND */}
             <div
                 style={{
                     position: "absolute",
@@ -51,7 +52,7 @@ export default function Index() {
                 style={{
                     position: "absolute",
                     inset: 0,
-                    backgroundColor: "rgba(0,0,0,0.45)",
+                    backgroundColor: "rgba(0,0,0,0.55)",
                 }}
             />
 
@@ -73,6 +74,7 @@ export default function Index() {
                     textAlign: "center",
                     opacity: closing ? 0 : 1,
                     transition: "opacity 0.6s ease",
+                    padding: "0 20px",
                 }}
             >
                 <h1 style={titleStyle}>Undangan Pernikahan</h1>
@@ -80,7 +82,15 @@ export default function Index() {
                 <h3 style={{ ...nameStyle, animationDelay: "0.3s" }}>
                     Pratu Randriano Dwi Mulyono
                     <br />
-                    <span style={{ fontSize: 26, fontWeight: 600 }}>&</span>
+                    <span
+                        style={{
+                            fontFamily: "var(--font-playfair)",
+                            fontSize: 28,
+                            fontWeight: 500,
+                        }}
+                    >
+                        &
+                    </span>
                     <br />
                     Annisa Nur Afiifah
                 </h3>
@@ -89,10 +99,7 @@ export default function Index() {
                     Sabtu, 07 Februari 2025
                 </p>
 
-                <button
-                    onClick={openInvitation}
-                    style={buttonStyle}
-                >
+                <button onClick={openInvitation} style={buttonStyle}>
                     Buka Undangan
                 </button>
             </div>
@@ -118,7 +125,7 @@ export default function Index() {
 
                 @keyframes pulse {
                     0% { box-shadow: 0 0 0 0 rgba(212,176,63,0.6); }
-                    70% { box-shadow: 0 0 0 12px rgba(212,176,63,0); }
+                    70% { box-shadow: 0 0 0 14px rgba(212,176,63,0); }
                     100% { box-shadow: 0 0 0 0 rgba(212,176,63,0); }
                 }
             `}</style>
@@ -126,40 +133,48 @@ export default function Index() {
     );
 }
 
-/* STYLES */
+/* ================= STYLES ================= */
+
 const titleStyle: React.CSSProperties = {
-    fontSize: 42,
+    fontSize: 18,
     fontWeight: 600,
-    marginBottom: 16,
+    marginBottom: 18,
     animation: "fadeUp 1s ease forwards",
+    fontFamily: "var(--font-playfair)",
+    letterSpacing: "2px",
 };
 
 const nameStyle: React.CSSProperties = {
-    fontSize: 40,
+    fontSize: 58,
     fontWeight: 400,
-    lineHeight: 1.6,
+    lineHeight: 1.2,
     marginBottom: 20,
     opacity: 0,
     animation: "fadeUp 1s ease forwards",
+    fontFamily: "var(--font-vibes)", // INI KUNCI UNDANGAN
 };
 
 const dateStyle: React.CSSProperties = {
-    fontSize: 20,
-    marginBottom: 28,
+    fontSize: 18,
+    marginBottom: 32,
     opacity: 0,
     animation: "fadeUp 1s ease forwards",
+    fontFamily: "var(--font-playfair)",
+    letterSpacing: "1px",
 };
 
 const buttonStyle: React.CSSProperties = {
-    padding: "14px 40px",
+    padding: "14px 44px",
     borderRadius: 30,
     border: "none",
     cursor: "pointer",
     backgroundColor: "#d4b03f",
     color: "white",
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: 600,
     animation: "fadeUp 1s ease forwards, pulse 2s infinite",
     animationDelay: "0.9s",
     opacity: 0,
+    fontFamily: "var(--font-playfair)",
+    letterSpacing: "1px",
 };
