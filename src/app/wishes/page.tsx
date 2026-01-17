@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import {
     collection,
     addDoc,
@@ -10,6 +11,7 @@ import {
     serverTimestamp,
 } from "firebase/firestore";
 import { db } from "../../utils/firebase";
+import { useAudio } from "../../components/AudioContext";
 import bgWedding from "../../assets/bunga1.jpg";
 
 interface Wish {
@@ -20,21 +22,13 @@ interface Wish {
 }
 
 export default function WishesPage() {
-    const audioRef = useRef<HTMLAudioElement | null>(null);
+    const router = useRouter();
+    const { playMusic } = useAudio();
 
     const [nama, setNama] = useState("");
     const [hubungan, setHubungan] = useState("");
     const [pesan, setPesan] = useState("");
     const [wishes, setWishes] = useState<Wish[]>([]);
-
-    // ▶️ Play music
-    useEffect(() => {
-        const playMusic = () => {
-            audioRef.current?.play().catch(() => { });
-        };
-        document.addEventListener("click", playMusic, { once: true });
-        return () => document.removeEventListener("click", playMusic);
-    }, []);
 
     // 🔥 Realtime Firestore
     useEffect(() => {
@@ -56,6 +50,7 @@ export default function WishesPage() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        playMusic(); // pastikan musik tetap aktif
 
         try {
             await addDoc(collection(db, "wishes"), {
@@ -65,12 +60,13 @@ export default function WishesPage() {
                 createdAt: serverTimestamp(),
             });
 
-            // Reset form
             setNama("");
             setHubungan("");
             setPesan("");
 
-            // ❌ Tidak redirect, biar list tetap muncul
+            // scroll halus ke atas biar kelihatan ucapan terbaru
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            router.push("/");
         } catch (error) {
             console.error(error);
             alert("Gagal mengirim ucapan");
@@ -79,6 +75,7 @@ export default function WishesPage() {
 
     return (
         <div
+            onClick={playMusic}
             style={{
                 minHeight: "100vh",
                 backgroundImage: `url(${bgWedding.src})`,
@@ -95,11 +92,6 @@ export default function WishesPage() {
                     backgroundColor: "rgba(0,0,0,0.45)",
                 }}
             />
-
-            {/* Audio */}
-            <audio ref={audioRef} loop preload="auto">
-                <source src="/music/until-i-found-you.mp3" type="audio/mpeg" />
-            </audio>
 
             {/* CONTENT */}
             <div
@@ -178,8 +170,12 @@ export default function WishesPage() {
                         }}
                     >
                         <strong>{w.nama}</strong>{" "}
-                        <span style={{ opacity: 0.8 }}>({w.hubungan})</span>
-                        <p style={{ marginTop: "8px", marginBottom: 0 }}>{w.pesan}</p>
+                        <span style={{ opacity: 0.8 }}>
+                            ({w.hubungan})
+                        </span>
+                        <p style={{ marginTop: "8px", marginBottom: 0 }}>
+                            {w.pesan}
+                        </p>
                     </div>
                 ))}
             </div>

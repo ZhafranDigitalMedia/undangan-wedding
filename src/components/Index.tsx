@@ -1,30 +1,26 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useAudio } from "../components/AudioContext";
 import bgWedding from "../assets/gambar4mbanisa.jpeg";
 
 export default function Index() {
-    const audioRef = useRef<HTMLAudioElement | null>(null);
-    const [musicPlayed, setMusicPlayed] = useState(false);
+    const router = useRouter();
+    const { playMusic } = useAudio();
     const [closing, setClosing] = useState(false);
 
-    const playMusicOnce = () => {
-        if (!musicPlayed && audioRef.current) {
-            audioRef.current.play().catch(() => { });
-            setMusicPlayed(true);
-        }
-    };
-
     const openInvitation = () => {
+        playMusic(); // pastikan musik aktif
         setClosing(true);
         setTimeout(() => {
-            window.location.href = "/rsvp";
+            router.push("/rsvp");
         }, 800);
     };
 
     return (
         <div
-            onClick={playMusicOnce}
+            onClick={playMusic}
             style={{
                 position: "fixed",
                 inset: 0,
@@ -56,11 +52,6 @@ export default function Index() {
                 }}
             />
 
-            {/* AUDIO */}
-            <audio ref={audioRef} loop preload="auto">
-                <source src="/music/until-i-found-you.mp3" type="audio/mpeg" />
-            </audio>
-
             {/* CONTENT */}
             <div
                 style={{
@@ -79,25 +70,15 @@ export default function Index() {
             >
                 <h1 style={titleStyle}>Undangan Pernikahan</h1>
 
-                <h3 style={{ ...nameStyle, animationDelay: "0.3s" }}>
+                <h3 style={nameStyle}>
                     Pratu Randriano Dwi Mulyono
                     <br />
-                    <span
-                        style={{
-                            fontFamily: "var(--font-playfair)",
-                            fontSize: 28,
-                            fontWeight: 500,
-                        }}
-                    >
-                        &
-                    </span>
+                    <span style={{ fontFamily: "var(--font-playfair)", fontSize: 28 }}>&</span>
                     <br />
                     Annisa Nur Afiifah
                 </h3>
 
-                <p style={{ ...dateStyle, animationDelay: "0.6s" }}>
-                    Sabtu, 07 Februari 2025
-                </p>
+                <p style={dateStyle}>Sabtu, 07 Februari 2025</p>
 
                 <button onClick={openInvitation} style={buttonStyle}>
                     Buka Undangan
