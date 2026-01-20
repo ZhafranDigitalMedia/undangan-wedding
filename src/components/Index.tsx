@@ -78,7 +78,7 @@ export default function Index() {
                     Annisa Nur Afiifah
                 </h3>
 
-                <p style={dateStyle}>Sabtu, 07 Februari 2025</p>
+                <p style={dateStyle}>Sabtu, 07 Februari 2026</p>
 
                 <button onClick={openInvitation} style={buttonStyle}>
                     Buka Undangan
